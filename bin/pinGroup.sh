@@ -1,18 +1,21 @@
-
-declare -A PIN_GROUPS
+SWD=$(dirname ${BASH_SOURCE[0]})
+  
+. $SWD/hash.sh
 
 function pinGroupSetPin() {
 	local groupName=$1
 	local pinName=$2
 	local pinNumber=$3
 
-	PIN_GROUPS[$groupName:$pinName]=$pinNumber
+	hashPut pins "${groupName}_$pinName" $pinNumber
 }
 
 function pinGroupGetPin() {
 	local groupName=$1
 	local pinName=$2
-	echo ${PIN_GROUPS[$groupName:$pinName]}
+
+	echo hashGet pins "${groupName}_$pinName"
+	hashGet pins "${groupName}_$pinName"
 }
 
 function pinGroupGetOtherPins() {
@@ -20,20 +23,14 @@ function pinGroupGetOtherPins() {
 	local pinName=$2
 
 	pins=
-	for pinId in ${!PIN_GROUPS[@]}; do
-		if [[ "$pinId" =~ ^$groupName ]] && [ "$pinId" != "$groupName:$pinName" ]; then
-				pins="$pins ${PIN_GROUPS[$pinId]}"
+	keys=$(hashKeys pins)
+	for pinId in $keys; do
+		if [[ "$pinId" =~ ^$groupName ]] && [ "$pinId" != "${groupName}_$pinName" ]; then
+				pins="$pins $(hashGet pins $pinId)"
 		fi
 	done
 
 	pins=${pins## }
 	echo ${pins}
 }
-
-# pinGroupSetPin FILTER_IN NORMAL 1
-# pinGroupSetPin FILTER_IN REVERSE 2
-# pinGroupSetPin FILTER_IN NONE 3
-
-# pinGroupGetPin FILTER_IN NORMAL
-# pinGroupGetOtherPins FILTER_IN NORMAL
 
