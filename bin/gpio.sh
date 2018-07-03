@@ -19,11 +19,35 @@ case "$1" in
 
 	;;
 
+	unexportall|unexpall)
+		for pin in /sys/class/gpio/gpio[0-9]*; do
+			pin=${pin##*/}
+			pin=${pin##gpio}
+			echo "unexport $pin" >&2
+			echo "$pin" > /sys/class/gpio/unexport
+		done
+	;;
+
 	direction|dir)
 		[ ! -L "/sys/class/gpio/gpio$2" ] && exit 1
 		cat "/sys/class/gpio/gpio$2/direction" | grep -q "$3" && exit
 		echo "direction $2 $3" >&2
 		echo "$3" > "/sys/class/gpio/gpio$2/direction"
+	;;
+
+	active|act)
+		[ ! -L "/sys/class/gpio/gpio$2" ] && exit 1
+		case "$3" in
+			low|lo|l)
+				value=1
+			;;
+			*)
+				value=0
+			;;
+		esac
+		cat "/sys/class/gpio/gpio$2/active_low" | grep -q "$value" && exit
+		echo "active $2 $3" >&2
+		echo "$value" > "/sys/class/gpio/gpio$2/active_low"
 	;;
 
 	on)

@@ -9,7 +9,8 @@ function pinGroupSetPin() {
 	local pinNumber=$3
 
 	hashPut pins "${groupName}_$pinName" $pinNumber
-	$SWD/gpio.sh export $pinNumber
+	$SWD/gpio.sh exp $pinNumber
+	$SWD/gpio.sh dir $pinNumber high
 	$SWD/gpio.sh dir $pinNumber out
 }
 
