@@ -1,6 +1,7 @@
 SWD=$(dirname ${BASH_SOURCE[0]})
   
 . $SWD/hash.sh
+. $SWD/pinControl.sh
 
 function pinGroupSetPin() {
 	local groupName=$1
@@ -14,7 +15,6 @@ function pinGroupGetPin() {
 	local groupName=$1
 	local pinName=$2
 
-	echo hashGet pins "${groupName}_$pinName"
 	hashGet pins "${groupName}_$pinName"
 }
 
@@ -24,13 +24,35 @@ function pinGroupGetOtherPins() {
 
 	pins=
 	keys=$(hashKeys pins)
-	for pinId in $keys; do
-		if [[ "$pinId" =~ ^$groupName ]] && [ "$pinId" != "${groupName}_$pinName" ]; then
-				pins="$pins $(hashGet pins $pinId)"
+	for pin in $keys; do
+		if [[ "$pin" =~ ^$groupName ]] && [ "$pin" != "${groupName}_$pinName" ]; then
+				pins="$pins $(hashGet pins $pin)"
 		fi
 	done
 
 	pins=${pins## }
 	echo ${pins}
+}
+
+function pinGroupPinOff() {
+	local groupName=$1
+	local pinName=$2
+
+	pin=$(pinGroupGetPin $groupName $pinName)
+	pinOff $pin
+}
+
+function pinGroupPinOn() {
+	local groupName=$1
+	local pinName=$2
+
+	otherPins=$(pinGroupGetOtherPins $groupName $pinName)
+
+	for pin in $otherPins; do
+		pinOff $pin
+	done
+
+	pin=$(pinGroupGetPin $groupName $pinName)
+	pinOn $pin
 }
 

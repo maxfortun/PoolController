@@ -1,7 +1,7 @@
 function hashPut() {
 	name=$1
 	key=$2
-	value=$2
+	value=$3
 
 	ref=hash_${name}_${key}
 
