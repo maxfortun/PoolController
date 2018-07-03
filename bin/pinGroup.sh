@@ -1,14 +1,16 @@
 SWD=$(dirname ${BASH_SOURCE[0]})
   
 . $SWD/hash.sh
-. $SWD/pinControl.sh
 
 function pinGroupSetPin() {
 	local groupName=$1
 	local pinName=$2
 	local pinNumber=$3
+	local pinNumber=$3
 
 	hashPut pins "${groupName}_$pinName" $pinNumber
+	$SWD/gpio.sh export $pinNumber
+	$SWD/gpio.sh dir $pinNumber out
 }
 
 function pinGroupGetPin() {
@@ -39,7 +41,7 @@ function pinGroupPinOff() {
 	local pinName=$2
 
 	pin=$(pinGroupGetPin $groupName $pinName)
-	pinOff $pin
+	$SWD/gpio.sh off $pin 
 }
 
 function pinGroupPinOn() {
@@ -49,10 +51,10 @@ function pinGroupPinOn() {
 	otherPins=$(pinGroupGetOtherPins $groupName $pinName)
 
 	for pin in $otherPins; do
-		pinOff $pin
+		$SWD/gpio.sh off $pin
 	done
 
 	pin=$(pinGroupGetPin $groupName $pinName)
-	pinOn $pin
+	$SWD/gpio.sh on $pin 
 }
 
