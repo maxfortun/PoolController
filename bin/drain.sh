@@ -2,15 +2,10 @@
 set -ex
 cd $(dirname $0)
 . pins
-#sleep 60
 ./pumpOff.sh
-sleep 5
-./gpio.sh off $PIN_FILTER_DRAIN
-sleep 30
+./drainOpen.sh
 ./pumpOn.sh
-sleep 10
+sleep 5
 ./pumpOff.sh
-sleep 30
-./gpio.sh on $PIN_FILTER_DRAIN
-sleep 30
+./drainClose.sh
 ./pumpOn.sh
