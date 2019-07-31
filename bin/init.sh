@@ -1,5 +1,5 @@
 #!/bin/bash
-SWD=$(dirname $0)
+SWD=$(dirname $(readlink -f $0))
 cd $SWD
 
 . pins
