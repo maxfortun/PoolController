@@ -5,10 +5,10 @@ echo
 
 SWD=$(dirname $(readlink -f $0))
 
-pumpStatus=$($SWD/bin/pump/status.sh)
+pumpStatus=$($SWD/pump/status.sh)
 pumpAction="off"
 
-drainStatus=$($SWD/bin/drain/status.sh)
+drainStatus=$($SWD/drain/status.sh)
 drainAction="open"
 
 cat <<_EOT_
