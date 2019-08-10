@@ -1,4 +1,7 @@
 #!/bin/bash
+set -x
+
+
 
 SWD=$(dirname $(readlink -f $0))
 BWD=$(dirname $SWD)

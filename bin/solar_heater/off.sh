@@ -5,7 +5,7 @@ BWD=$(dirname $SWD)
 
 . $BWD/pins
 
-$BWD/gpio.sh dir $PIN_FILTER_DRAIN out
-$BWD/gpio.sh off $PIN_FILTER_DRAIN
+$BWD/gpio.sh dir $PIN_SOLAR_HEATER out
+$BWD/gpio.sh on $PIN_SOLAR_HEATER
 sleep 30
 

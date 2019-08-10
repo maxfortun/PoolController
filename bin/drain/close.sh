@@ -5,6 +5,6 @@ BWD=$(dirname $SWD)
 
 . $BWD/pins
 
-$BWD/gpio.sh off $PIN_FILTER_DRAIN
+$BWD/gpio.sh on $PIN_FILTER_DRAIN
 sleep 30
 
