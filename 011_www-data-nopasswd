@@ -1,2 +1,0 @@
-www-data ALL= NOPASSWD: /home/pi/apps/PoolController/bin/pool.cgi
-

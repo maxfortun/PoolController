@@ -9,5 +9,6 @@ cd $SWD
 
 drain/init.sh
 pump/init.sh
+solar_heater/init.sh
 
 
