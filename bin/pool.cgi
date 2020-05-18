@@ -14,6 +14,9 @@ drainAction=$($SWD/drain/actions.sh "$drainStatus")
 solarStatus=$($SWD/solar_heater/status.sh)
 solarAction=$($SWD/solar_heater/actions.sh "$solarStatus")
 
+fillStatus=$($SWD/fill/status.sh)
+fillAction=$($SWD/fill/actions.sh "$fillStatus")
+
 OFS=$IFS IFS="&" PARAMS=($QUERY_STRING) IFS=$OFS
 for PARAM in $PARAMS; do
 	OFS=$IFS IFS== PARAM=($PARAM) IFS=$OFS
@@ -84,6 +87,18 @@ _EOT_
 
 for action in $solarAction; do
 	echo "			<td><a href="?action=solar_heater/$action">$action</a></td>"
+done
+
+cat <<_EOT_
+			</tr>
+
+			<tr>
+				<th>Fill</th>
+				<td>$fillStatus</td>
+_EOT_
+
+for action in $fillAction; do
+	echo "			<td><a href="?action=fill/$action">$action</a></td>"
 done
 
 cat <<_EOT_
