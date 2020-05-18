@@ -16,6 +16,7 @@ solarAction=$($SWD/solar_heater/actions.sh "$solarStatus")
 
 fillStatus=$($SWD/fill/status.sh)
 fillAction=$($SWD/fill/actions.sh "$fillStatus")
+fillDescription=$($SWD/fill/description.sh "$fillStatus" | sed -z 's#\n#<br/>#g')
 
 OFS=$IFS IFS="&" PARAMS=($QUERY_STRING) IFS=$OFS
 for PARAM in $PARAMS; do
@@ -48,8 +49,9 @@ cat <<_EOT_
 		<table>
 			<tr>
 				<th></th>
-				<td>Status</td>
-				<td>Actions</td>
+				<th>Status</th>
+				<th>Actions</th>
+				<th>Description</th>
 			</tr>
 
 
@@ -57,13 +59,15 @@ cat <<_EOT_
 			<tr>
 				<th>Pump</th>
 				<td>$pumpStatus</td>
+				<td>
 _EOT_
 
 for action in $pumpAction; do
-	echo "			<td><a href="?action=pump/$action">$action</a></td>"
+	echo "			<a href="?action=pump/$action">$action</a>"
 done
 
 cat <<_EOT_
+				</td>
 			</tr>
 
 
@@ -71,37 +75,44 @@ cat <<_EOT_
 			<tr>
 				<th>Drain</th>
 				<td>$drainStatus</td>
+				<td>
 _EOT_
 
 for action in $drainAction; do
-	echo "			<td><a href="?action=drain/$action">$action</a></td>"
+	echo "			<a href="?action=drain/$action">$action</a>"
 done
 
 cat <<_EOT_
+				</td>
 			</tr>
 
 			<tr>
 				<th>Solar heater</th>
 				<td>$solarStatus</td>
+				<td>
 _EOT_
 
 for action in $solarAction; do
-	echo "			<td><a href="?action=solar_heater/$action">$action</a></td>"
+	echo "			<a href="?action=solar_heater/$action">$action</a>"
 done
 
 cat <<_EOT_
+				</td>
 			</tr>
 
 			<tr>
 				<th>Fill</th>
 				<td>$fillStatus</td>
+				<td>
 _EOT_
 
 for action in $fillAction; do
-	echo "			<td><a href="?action=fill/$action">$action</a></td>"
+	echo "			<a href="?action=fill/$action">$action</a>"
 done
 
 cat <<_EOT_
+				</td>
+				<td>$fillDescription</td>
 			</tr>
 
 

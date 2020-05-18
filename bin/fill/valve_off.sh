@@ -8,3 +8,4 @@ curl -X POST \
   -d '{"entity_id": "switch.backyard_hose"}' \
   "$address/api/services/switch/turn_off"
 
+echo "$(date) Turned off" > $SWD/description/off

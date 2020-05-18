@@ -8,3 +8,5 @@ curl -X POST \
   -d '{"entity_id": "switch.backyard_hose"}' \
   "$address/api/services/switch/turn_on"
 
+echo "$(date) Turned on" > $SWD/description/on
+
