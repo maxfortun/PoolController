@@ -2,8 +2,8 @@
 SWD=$(dirname $0)
 
 while true; do
-	$SWD/on.sh
+	$SWD/valve_on.sh
 	sleep 3600
-	$SWD/off.sh
+	$SWD/valve_off.sh
 done
 

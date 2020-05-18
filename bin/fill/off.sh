@@ -1,10 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
 SWD=$(dirname $0)
-. $SWD/setenv.sh
-
-curl -X POST \
-  -H "Authorization: Bearer $accessToken" \
-  -H "Content-Type: application/json" \
-  -d '{"entity_id": "switch.backyard_hose"}' \
-  "$address/api/services/switch/turn_off"
-
+pid=$(ps auxwww|grep "cycle.sh id=fill_cycle"|grep -v grep|awk '{ print $2 }')
+[ -n "$pid" ] && kill -9 "$pid"
+$SWD/valve_off.sh
