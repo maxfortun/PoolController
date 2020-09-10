@@ -14,3 +14,10 @@ https://www.amazon.com/gp/product/B002ZPJVV2
 # Display Driver
 https://github.com/UCTRONICS/UCTRONICS_LCD35_HDMI_RPI.git
 
+# Crontab
+```
+0 8 * * * /home/pi/apps/PoolController/bin/pump/on.sh
+0 10 * * * /home/pi/apps/PoolController/bin/solar_heater/on.sh auto
+0 18 * * * /home/pi/apps/PoolController/bin/solar_heater/off.sh auto
+0 20 * * * /home/pi/apps/PoolController/bin/pump/off.sh
+```
