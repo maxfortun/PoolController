@@ -28,6 +28,30 @@ cat <<_EOT_
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			window.addEventListener('load', (e) => {
+				window.isRefreshed = true;
+				console.log("load", window.isRefreshed);
+			});
+
+			window.addEventListener('pageshow', (e) => {
+				console.log("pageshow", window.isRefreshed);
+				if(!window.isRefreshed) {
+					//window.location.reload();
+				}
+			});
+
+			window.addEventListener('pagehide', (e) => {
+				window.isRefreshed = false;
+				console.log("pagehide", window.isRefreshed);
+			});
+
+			window.addEventListener('blur', (e) => {
+				window.isRefreshed = false;
+				console.log("blur", window.isRefreshed);
+			});
+
+		</script>
 		<title>Pool Control</title>
 	</head>
 	<body>
@@ -38,7 +62,7 @@ _EOT_
 action="$SWD/$QUERY_action.sh"
 if [ -x "$action" ]; then
 cat <<_EOT_
-			<h2>Executing $QUERY_action - please wait.</h2>
+			<h2>Executing $action - please wait.</h2>
 			<script>
 				location.href = location.href.replace(/\?.*$/g,"");
 			</script>
