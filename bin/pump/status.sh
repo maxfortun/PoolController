@@ -5,6 +5,7 @@ BWD=$(dirname $SWD)
 
 . $BWD/pins
 
+auto=$(cat $SWD/auto.status)
 status=$($BWD/gpio.sh read $PIN_PUMP_PWR)
 
 if [ "$auto" = "true" ]; then
