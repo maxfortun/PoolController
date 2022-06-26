@@ -7,7 +7,9 @@ BWD=$(dirname $SWD)
 
 status=$($BWD/gpio.sh read $PIN_PUMP_PWR)
 
-if [ "$status" = "0" ]; then
+if [ "$auto" = "true" ]; then
+	echo auto
+elif [ "$status" = "0" ]; then
 	echo on
 elif [ "$status" = "1" ]; then
 	echo off
